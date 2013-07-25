@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<buddy>
+    <!-- Example buddy XML-file -->
+
+    <name>Buddy Example</name>
+
+    <!-- Actions -->
+    <actions>
+        <!--
+            This is an example of how buddy can be used to clear cache directories
+            or delete some files:
+
+            Called like 'buddy a:clearcache
+        -->
+        <action name="clearcache">
+            <description>Empty the cache dir, remove some other dir, and delete some file</description>
+            <method>delete</method>
+            <!-- Parameters for the delete-action: -->
+            <params>
+                <!-- Empty or delete a directory: -->
+                <folder mode="empty">cache</folder>
+                <folder mode="delete">dir/delete_this_dir</folder>
+                <!-- Delete a file: -->
+                <file>dir/some_file.ext</file>
+            </params>
+        </action>
+
+        <!--
+            This is an example of how buddy can add or remove a specific line of code
+            from a file
+        -->
+        <action name="devmode">
+            <description>Toggle dev mode on or off</description>
+            <method>togglecode</method>
+            <!-- Parameters for the togglecode-action: -->
+            <params>
+                <!-- Which file? -->
+                <file>.htaccess</file>
+                <!-- What line of code should be toggled? -->
+                <line>setEnv DEVELOPER_MODE 1</line>
+            </params>
+        </action>
+    </actions>
+</buddy>
