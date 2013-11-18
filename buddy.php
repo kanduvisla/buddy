@@ -118,7 +118,10 @@ Class Buddy {
 
     /**
      * Output some text to the console. This function takes additional parameters.
+     *
      * @param $str
+     * @param array $args
+     * @param string $color
      */
     public static function out($str, $args = array(), $color = self::GRAY)
     {
@@ -140,7 +143,9 @@ Class Buddy {
     }
 
     /**
+     * Parse the XML document and run the action
      * @param $xml  SimpleXMLElement
+     * @return bool
      */
     public function parse($xml)
     {
@@ -153,13 +158,35 @@ Class Buddy {
                 Buddy::out(self::WHITE."\t".$actionXML['name'].self::GRAY."\n\t\t".$actionXML->description);
             }
         } else {
-
+            $action = $this->get('a');
+            $actionXML = $xml->xpath('actions/action[@name="'.strtolower($action).'"]');
+            if(count($actionXML) != 1) {
+                Buddy::out("Cannot execute \"$action\": no such method found in configuration file!\n", array(), self::RED);
+                return false;
+            }
+            $actionXML = $actionXML[0];
+            $className = ucfirst(strtolower((string)$actionXML->method));
+            // Check if the file exists:
+            $classFile = './methods/'.$className.'.php';
+            if(!file_exists($classFile)) {
+                Buddy::out("Cannot execute \"$action\": method not found in methods folder!\n", array(), self::RED);
+                return false;
+            }
+            // File exists:
+            require_once('./methods/BuddyMethod.php');  // All methods extend from this class
+            require_once($classFile);
+            if(!class_exists($className)) {
+                Buddy::out("Cannot execute \"$action\": class not found!\n", array(), self::RED);
+                return false;
+            }
+            // Class found:
+            Buddy::out("Executing \"$action\"...\n");
+            $class  = new $className();
+            $result = $class->run($actionXML->xpath('params'), $this->vars);
+            if($result === true) {
+                Buddy::out("Execution completed!\n", array(), self::GREEN);
+            }
         }
+        return true;
     }
 }
-
-/*
- * Run, Buddy run!:
- */
-array_shift($argv);
-Buddy::run($argv);

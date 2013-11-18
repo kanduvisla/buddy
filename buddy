@@ -1,0 +1,9 @@
+#!/usr/bin/php
+<?php
+require_once('buddy.php');
+
+/*
+ * Run, Buddy run!:
+ */
+array_shift($argv);
+Buddy::run($argv);
