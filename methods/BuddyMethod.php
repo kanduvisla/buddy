@@ -25,6 +25,14 @@ class BuddyMethod {
      */
     public function run($configParameters = array(), $userParameters = array())
     {
+        foreach($configParameters as $paramElement)
+        {
+            foreach($paramElement as $param)
+            {
+                /* @var $param SimpleXMLElement */
+
+            }
+        }
         return true;
     }
 }

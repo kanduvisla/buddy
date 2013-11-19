@@ -35,9 +35,26 @@
             <!-- Parameters for the togglecode-action: -->
             <params>
                 <!-- Which file? -->
-                <file>.htaccess</file>
+                <file>test/.htaccess</file>
                 <!-- What line of code should be toggled? -->
-                <line>setEnv DEVELOPER_MODE 1</line>
+                <line begin="0">setEnv DEVELOPER_MODE 1</line>
+            </params>
+            <!-- Extra params result in multiple executions: -->
+            <params>
+                <file>test/Test.php</file>
+                <!-- This is the code to toggle: -->
+                <code>
+                    <![CDATA[
+                        echo "This code is inserted here";
+                        echo "This line too!";
+                    ]]>
+                </code>
+                <!-- The pattern to put the code after. If before=1, the code is put before the pattern: -->
+                <pattern before="0">
+                    <![CDATA[
+                        public function run\(\$doStuff\)(.?|.+)\{
+                    ]]>
+                </pattern>
             </params>
         </action>
     </actions>

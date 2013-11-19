@@ -1,0 +1,2 @@
+# This is a test .htaccess file
+setEnv DEVELOPER_MODE 1
