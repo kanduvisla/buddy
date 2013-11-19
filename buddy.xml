@@ -57,5 +57,64 @@
                 </pattern>
             </params>
         </action>
+
+        <!--
+            This is an example for code generation
+        -->
+        <action name="generate">
+            <description>Generate some example code</description>
+            <method>generate</method>
+            <!--
+                This allows you to set user parameters in the documentation (or as required parameters):
+            -->
+            <user_parameters>
+                <package required="1">Package name</package>
+                <module required="1">Module name</module>
+                <version>Version number</version>
+            </user_parameters>
+            <!--
+                Generate some stuff:
+            -->
+            <params>
+                <!--
+                    Create folders:
+                -->
+                <folder>app/code/local/{{package}}/{{module}}</folder>
+                <folder>app/code/local/{{package}}/{{module}}/etc</folder>
+                <folder>app/code/local/{{package}}/{{module}}/controller</folder>
+                <!--
+                    Create files from a template:
+                -->
+                <file template="test/generate/etc/config.xml">app/code/local/{{package}}/{{module}}/etc/config.xml</file>
+                <!--
+                    Create a file from CDATA:
+                -->
+                <file node="example_file">app/code/local/{{package}}/{{module}}/etc/system.xml</file>
+                <!-- This is the node: -->
+                <example_file>
+                    <![CDATA[
+                        <?xml version="1.0">
+                        <system>
+                            <!-- Your stuff goes here -->
+                        </system>
+                    ]]>
+                </example_file>
+            </params>
+        </action>
+
+        <!--
+            This is an example for a combination of actions:
+        -->
+        <action name="multi">
+            <description>Clear cache and switch devmode</description>
+            <method>multi</method>
+            <params>
+                <!--
+                    Just put a list of actions here you want to execute in that particular order:
+                -->
+                <action name="clearcache" />
+                <action name="devmode" />
+            </params>
+        </action>
     </actions>
 </buddy>

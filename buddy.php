@@ -156,6 +156,16 @@ Class Buddy {
             foreach($xml->xpath('actions/action') as $actionXML)
             {
                 Buddy::out(self::WHITE."\t".$actionXML['name'].self::GRAY."\n\t\t".$actionXML->description);
+                // See if there are user parameters:
+                if($actionXML->user_parameters)
+                {
+                    Buddy::out("\t\tUser parameters:");
+                    foreach($actionXML->user_parameters->children() as $child)
+                    {
+                        $required = isset($child['required']) ? $child['required'] == 1 : false;
+                        Buddy::out("\t\t - ".$child->getName().' : '.($required ? '(required) ' : '').(string)$child);
+                    }
+                }
             }
         } else {
             $action = $this->get('a');
@@ -165,6 +175,18 @@ Class Buddy {
                 return false;
             }
             $actionXML = $actionXML[0];
+            // Check if required parameters are set:
+            $ok = true;
+            foreach($actionXML->xpath('user_parameters/*[@required="1"]') as $param)
+            {
+                if($this->get($param->getName()) === false) {
+                    Buddy::out('Required parameter \'%s\' is not set', array($param->getName()), self::RED);
+                    $ok = false;
+                }
+            }
+            if(!$ok) {
+                return false;
+            }
             $className = ucfirst(strtolower((string)$actionXML->method));
             // Check if the file exists:
             $classFile = './methods/'.$className.'.php';
