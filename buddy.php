@@ -184,7 +184,7 @@ Class Buddy {
             $class  = new $className();
             $result = $class->run($actionXML->xpath('params'), $this->vars);
             if($result === true) {
-                Buddy::out("Execution completed!\n", array(), self::GREEN);
+                Buddy::out("\nExecution completed!\n", array(), self::GREEN);
             }
         }
         return true;
