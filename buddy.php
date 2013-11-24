@@ -163,7 +163,9 @@ Class Buddy {
                     foreach($actionXML->user_parameters->children() as $child)
                     {
                         $required = isset($child['required']) ? $child['required'] == 1 : false;
-                        Buddy::out("\t\t - ".$child->getName().' : '.($required ? '(required) ' : '').(string)$child);
+                        $default  = isset($child['default']) ? $child['default'] : false;
+                        Buddy::out("\t\t - ".$child->getName().' : '.($required ? '(required) ' : '').(string)$child.
+                            ($default !== false ? ' (default: \''.$default.'\')' : ''));
                     }
                 }
             }
@@ -186,6 +188,14 @@ Class Buddy {
             }
             if(!$ok) {
                 return false;
+            }
+            // Check if there are default values that needs to be set:
+            foreach($actionXML->xpath('user_parameters/*[@default]') as $param)
+            {
+                if($this->get($param->getName()) === false) {
+                    $this->set($param->getName(), $param['default']);
+                    Buddy::out('Using default value for \'%s\' (\'%s\')', array($param->getName(), $param['default']));
+                }
             }
             $className = ucfirst(strtolower((string)$actionXML->method));
             // Check if the file exists:

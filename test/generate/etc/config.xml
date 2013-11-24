@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <global>
+        <{{package:ucfirst}}_{{module:ucfirst}}>
+            <version>{{version}}</version>
+        </{{package:ucfirst}}_{{module:ucfirst}}>
+        <models>
+            <{{module:lowercase}}>
+                <class>{{package:ucfirst}}_{{module:ucfirst}}_Model</class>
+            </{{module:lowercase}}>
+        </models>
+        <blocks>
+            <{{module:lowercase}}>
+                <class>{{package:ucfirst}}_{{module:ucfirst}}_Block</class>
+            </{{module:lowercase}}>
+        </blocks>
+        <helpers>
+            <{{module:lowercase}}>
+                <class>{{package:ucfirst}}_{{module:ucfirst}}_Helper</class>
+            </{{module:lowercase}}>
+        </helpers>
+    </global>
+</config>

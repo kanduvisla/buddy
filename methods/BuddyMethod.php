@@ -4,16 +4,6 @@
  */
 class BuddyMethod {
     /**
-     * If the method has any required parameters, this function returns an array with the names of them
-     *
-     * @return array
-     */
-    public function getRequiredParameters()
-    {
-        return array();
-    }
-
-    /**
      * This is the run-method that does the magic. It's provided with the configuration-parameters, and
      * the user parameters (command line for example).
      *
@@ -27,6 +17,8 @@ class BuddyMethod {
     {
         foreach($configParameters as $paramElement)
         {
+            /* @var $paramElement SimpleXMLElement */
+
             foreach($paramElement as $param)
             {
                 /* @var $param SimpleXMLElement */

@@ -70,8 +70,17 @@
             <user_parameters>
                 <package required="1">Package name</package>
                 <module required="1">Module name</module>
-                <version>Version number</version>
+                <version default="1.0.0">Version number</version>
             </user_parameters>
+            <!--
+                Make use of a helper:
+            -->
+<!--
+            <helpers>
+                <helper>ParamFunctions</helper>
+            </helpers>
+-->
+
             <!--
                 Generate some stuff:
             -->
@@ -79,26 +88,25 @@
                 <!--
                     Create folders:
                 -->
-                <folder>app/code/local/{{package}}/{{module}}</folder>
-                <folder>app/code/local/{{package}}/{{module}}/etc</folder>
-                <folder>app/code/local/{{package}}/{{module}}/controller</folder>
+                <folder>app/code/local/{{package:ucfirst}}/{{module:ucfirst}}</folder>
+                <folder>app/code/local/{{package:ucfirst}}/{{module:ucfirst}}/etc</folder>
+                <folder>app/code/local/{{package:ucfirst}}/{{module:ucfirst}}/controller</folder>
                 <!--
                     Create files from a template:
                 -->
-                <file template="test/generate/etc/config.xml">app/code/local/{{package}}/{{module}}/etc/config.xml</file>
+                <file template="test/generate/etc/config.xml">app/code/local/{{package:ucfirst}}/{{module:ucfirst}}/etc/config.xml</file>
                 <!--
                     Create a file from CDATA:
                 -->
-                <file node="example_file">app/code/local/{{package}}/{{module}}/etc/system.xml</file>
+                <file node="example_file">app/code/local/{{package:ucfirst}}/{{module:ucfirst}}/etc/system.xml</file>
                 <!-- This is the node: -->
-                <example_file>
-                    <![CDATA[
-                        <?xml version="1.0">
-                        <system>
-                            <!-- Your stuff goes here -->
-                        </system>
-                    ]]>
-                </example_file>
+                <example_file><![CDATA[<?xml version="1.0"?>
+<system>
+    <!-- Your stuff goes here -->
+    <{{package:ucfirst}}_{{module:ucfirst}}>
+
+    </{{package:ucfirst}}_{{module:ucfirst}}>
+</system>]]></example_file>
             </params>
         </action>
 
